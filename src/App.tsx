@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Component } from "react";
+import imagem from './img/suit-tie.png'
+import './css/estilo.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component<{ nomes: string[] }, { nomes: string[] }> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      nomes: this.props.nomes
+    }
+  }
+  obterListaDeNomes = () => {
+    let listaNomes = this.state.nomes.map((nome, indice) =>
+      <li key={indice}>
+        <div className="alinhamento" >
+        <img className="tamanho" src={imagem} alt=''/><br/>
+        <button onClick={this.removerNomeDaLista.bind(this, indice)} >{nome}</button>
+        </div>
+      </li>
+    );
+    return listaNomes
+  }
+  removerNomeDaLista(indice: number) {
+    let listaNomes = this.state.nomes
+    listaNomes.splice(indice,1)
+    this.setState({
+      nomes:listaNomes
+    })
+  }
+  render() {
+    let nomes = this.obterListaDeNomes()
+    return (
+      <div>
+        <ul>{nomes}</ul>
+      </div>
+    )
+  }
 }
-
 export default App;
